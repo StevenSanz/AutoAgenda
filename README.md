@@ -1,83 +1,123 @@
-# WebApp boilerplate with React JS and Flask API
+English Version
+Auto Agenda Taller
+Auto Agenda Taller is a web platform designed to facilitate the management of appointments in automotive workshops, making it easier for both clients and workshop staff to organize services, appointments, and communication. The platform aims to optimize operational efficiency and enhance the customer experience.
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+General Overview
+The main objective of Auto Agenda Taller is to simplify the way workshops handle appointments and services, providing clients with a user-friendly way to book appointments while enabling workshop staff to efficiently manage workflow. The application is structured into three main user roles: Administrator, Mechanic, and Client, each with its own dashboard and specific functionalities.
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+Technologies Used
+Frontend:
 
-### 1) Installation:
+React.js: To build a dynamic and responsive user interface.
+Bootstrap: Ensures responsive design and a polished look on any device.
+Backend:
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+Flask: Python microframework managing business logic and client-server interactions.
+SQLAlchemy: ORM that simplifies database interactions.
+Flask-Bcrypt: Ensures secure password encryption.
+Database:
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+PostgreSQL: Relational database used to store information related to users, appointments, vehicles, and services.
+Security and Authentication:
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+JWT (JSON Web Tokens): Used for secure user authentication, ensuring authorized access only.
+Flask-Bcrypt: Encrypts user passwords to safeguard sensitive data.
+Current Integrations:
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+Brevo API (formerly Sendinblue): Sends appointment confirmations and reminders via email and SMS for effective communication with clients.
+Future Integrations:
 
-* mkdir -p migrations/versions
+Google Calendar API: Sync appointments with users' personal calendars, enhancing scheduling.
+Deployment and Hosting:
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+Render: Ensures continuous availability and scalability.
+Heroku: Provides additional flexibility for server and resource management.
+Version Control:
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+Git/GitHub: Manages version control and collaboration, facilitating coordinated development among team members.
+How Each Section Works
+1. Client (Client Dashboard)
+Clients can:
 
-### Undo a migration
+Register and manage their profile: Create an account, update personal information, and manage their vehicles.
+Book appointments: Choose a vehicle, service (oil change, general inspection), and book an available time slot. Appointments are confirmed automatically if available.
+Appointment history: Review past appointments, services rendered, and comments.
+Comments and communication: Leave questions or comments before or after appointments, which will be answered by the workshop.
+2. Mechanic (Mechanic Dashboard)
+Mechanics can:
 
-You are also able to undo a migration by running
+View and manage assigned appointments: Access a list of scheduled appointments with details of the service and vehicle.
+Update appointment status: Mark appointments as "in progress" or "completed" and leave relevant comments.
+Client communication: Respond to client questions or comments regarding their appointments.
+Work history: Review a history of completed tasks and appointments.
+3. Administrator (Admin Dashboard)
+Administrators have full control over the platform and can:
 
-```sh
-$ pipenv run downgrade
-```
+Manage users: Add, remove, or modify user information (clients or mechanics), and assign roles as needed.
+Manage appointments and services: View, modify, or reassign appointments, and manage the services offered by the workshop (adjusting times, adding new services).
+Set workshop parameters: Adjust the maximum number of appointments per hour and other operational settings.
+Reports and statistics: Access statistics about completed appointments, services, and overall workshop performance.
+Summary
+Auto Agenda Taller is a complete solution for managing appointments in automotive workshops, providing a smooth experience for both clients and workshop staff. With a user-friendly interface and a robust backend, the platform optimizes the use of time and resources, while ensuring that clients can easily book and manage their appointments. The use of modern technologies such as React.js, Flask, PostgreSQL, and integration with Brevo for notifications via email and SMS, ensures that the application is fast, secure, and scalable for future improvements. The platform is deployed using Render and Heroku, offering flexibility and optimal availability.
 
-### Backend Populate Table Users
+Versión en Español
+Auto Agenda Taller
+Auto Agenda Taller es una plataforma web diseñada para facilitar la gestión de citas en talleres automotrices, permitiendo a los clientes y al personal del taller organizar servicios, citas y comunicación de manera eficiente. La plataforma busca optimizar la eficiencia operativa y mejorar la experiencia del cliente.
 
-To insert test users in the database execute the following command:
+Descripción General
+El objetivo principal de Auto Agenda Taller es simplificar la forma en que los talleres manejan las citas y los servicios, brindando a los clientes una forma fácil de reservar citas mientras el personal del taller gestiona de manera eficiente el flujo de trabajo. La aplicación está estructurada en tres roles principales: Administrador, Mecánico y Cliente, cada uno con su propio panel de control y funcionalidades específicas.
 
-```sh
-$ flask insert-test-users 5
-```
+Tecnologías Utilizadas
+Frontend:
 
-And you will see the following message:
+React.js: Para construir una interfaz de usuario dinámica y responsiva.
+Bootstrap: Asegura un diseño responsivo y pulido en cualquier dispositivo.
+Backend:
 
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
+Flask: Microframework en Python que gestiona la lógica del servidor y las interacciones con el cliente.
+SQLAlchemy: ORM que simplifica las interacciones con la base de datos.
+Flask-Bcrypt: Garantiza la encriptación segura de las contraseñas.
+Base de Datos:
 
-### **Important note for the database and the data inside it**
+PostgreSQL: Base de datos relacional utilizada para almacenar información relacionada con usuarios, citas, vehículos y servicios.
+Seguridad y Autenticación:
 
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
+JWT (JSON Web Tokens): Implementado para la autenticación segura de usuarios, permitiendo el acceso autorizado.
+Flask-Bcrypt: Encripta las contraseñas para proteger los datos sensibles.
+Integraciones Actuales:
 
-### Front-End Manual Installation:
+Brevo API (anteriormente Sendinblue): Envío de confirmaciones y recordatorios de citas por email y SMS para una comunicación eficiente con los clientes.
+Integraciones Futuras:
 
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
+Google Calendar API: Para sincronizar automáticamente las citas con los calendarios personales de los usuarios, facilitando la gestión de horarios.
+Despliegue y Hosting:
 
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
+Render: Asegura una disponibilidad continua y escalabilidad automática.
+Heroku: Utilizado como una opción adicional para el despliegue, proporcionando flexibilidad en la gestión de servidores y recursos.
+Control de Versiones:
 
-## Publish your website!
+Git/GitHub: Herramienta utilizada para el control de versiones y la colaboración, permitiendo un trabajo coordinado entre los miembros del equipo.
+Cómo Funciona Cada Sección
+1. Cliente (Panel del Cliente)
+Los clientes pueden:
 
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
+Registrarse y gestionar su perfil: Crear una cuenta, actualizar información personal y gestionar los vehículos asociados.
+Reservar citas: Seleccionar un vehículo, un servicio (cambio de aceite, revisión general) y reservar un horario disponible. Las citas se confirman automáticamente si hay disponibilidad.
+Historial de citas: Revisar citas pasadas, servicios realizados y comentarios asociados.
+Comentarios y comunicación: Dejar preguntas o comentarios antes o después de las citas, que serán respondidos por el taller.
+2. Mecánico (Panel del Mecánico)
+Los mecánicos pueden:
 
-### Contributors
+Ver y gestionar las citas asignadas: Acceder a una lista de citas programadas con detalles del servicio y vehículo.
+Actualizar el estado de las citas: Marcar citas como "en progreso" o "completadas" y dejar comentarios.
+Comunicación con los clientes: Responder a preguntas o comentarios de los clientes sobre sus citas.
+Historial de trabajo: Revisar su historial de tareas completadas y citas.
+3. Administrador (Panel del Administrador)
+El administrador tiene control total sobre la plataforma y puede:
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+Gestionar usuarios: Añadir, eliminar o modificar la información de usuarios (clientes o mecánicos) y asignar roles.
+Gestionar citas y servicios: Ver, modificar o reasignar citas, y gestionar los servicios ofrecidos (ajustando tiempos, agregando nuevos servicios).
+Configurar parámetros del taller: Ajustar el número máximo de citas por hora y otros parámetros operativos.
+Reportes y estadísticas: Acceso a estadísticas sobre citas realizadas, servicios completados y el rendimiento general del taller.
+Resumen
+Auto Agenda Taller es una solución completa para la gestión de citas en talleres automotrices, proporcionando una experiencia fluida tanto para clientes como para el personal del taller. Con una interfaz amigable y un backend robusto, la plataforma optimiza el uso del tiempo y los recursos del taller, permitiendo a los clientes gestionar sus citas de manera fácil. El uso de tecnologías modernas como React.js, Flask, PostgreSQL y la integración con Brevo para notificaciones por email y SMS asegura que la aplicación sea rápida, segura y escalable para mejoras futuras. La plataforma está desplegada utilizando Render y Heroku, garantizando flexibilidad y disponibilidad óptima.
