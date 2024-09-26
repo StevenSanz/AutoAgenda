@@ -121,12 +121,17 @@ class Setting(db.Model):
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     max_appointments_per_hour = db.Column(db.Integer, nullable=False)
+    opening_time = db.Column(db.String(5), nullable=True)  # Ejemplo: '09:00'
+    closing_time = db.Column(db.String(5), nullable=True)  # Ejemplo: '17:00'
 
     def serialize(self):
         return {
             'id': self.id,
-            'max_appointments_per_hour': self.max_appointments_per_hour
+            'max_appointments_per_hour': self.max_appointments_per_hour,
+            'opening_time': self.opening_time,
+            'closing_time': self.closing_time
         }
+
 
 class TokenBlockList(db.Model):
     id = db.Column(db.Integer, primary_key=True)

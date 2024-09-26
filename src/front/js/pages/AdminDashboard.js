@@ -22,6 +22,8 @@ const AdminDashboard = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [hasAccess, setHasAccess] = useState(false);
   const apiUrl = process.env.BACKEND_URL + "/api";
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
   const [profile, setProfile] = useState({
     email: "",
     password: "********",
@@ -35,6 +37,7 @@ const AdminDashboard = () => {
     if (updatedValue && updatedValue > 0) {
       setMaxAppointmentsPerHour(updatedValue);
       setStatusMessage("Settings updated successfully");
+      handleSaveSchedule(); // Llamar a la función de guardado aquí
     }
     setIsSettingModalOpen(false);
   };
@@ -122,6 +125,8 @@ const AdminDashboard = () => {
           } else {
             const data = await response.json();
             setMaxAppointmentsPerHour(data.max_appointments_per_hour);
+            setOpeningTime(data.opening_time || "");  // Cargar horario de apertura
+            setClosingTime(data.closing_time || "");  // Cargar horario de cierre
           }
         } catch (error) {
           console.error("Error loading setting:", error);
@@ -145,6 +150,35 @@ const AdminDashboard = () => {
       setStatusMessage("Profile updated successfully");
     }
     setIsProfileModalOpen(false);
+  };
+
+  // Función para guardar los horarios de apertura y cierre
+  const handleSaveSchedule = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${apiUrl}/settings`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          opening_time: openingTime,
+          closing_time: closingTime,
+          max_appointments_per_hour: maxAppointmentsPerHour, // Si es necesario enviar también otros ajustes
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update schedule");
+      }
+
+      const data = await response.json();
+      setStatusMessage("Schedule updated successfully");
+    } catch (error) {
+      console.error("Error updating schedule:", error);
+      setStatusMessage("Failed to update schedule");
+    }
   };
 
   const saveProfile = async (updatedProfile) => {
@@ -224,13 +258,47 @@ const AdminDashboard = () => {
                 </div>
                 <button
                   className="btn btn-secondary btnSetting"
-                  onClick={handleProfileModalOpen}
+                  onClick={() => setIsProfileModalOpen(true)}
                 >
                   Edit
                 </button>
               </div>
             </div>
+
+            {/* Nueva sección para los horarios */}
+            <div className="schedule-section mt-4">
+              <h3>Opening and Closing Time</h3>
+              <div className="row">
+                <div className="col">
+                  <label>Opening Time:</label>
+                  <input
+                    type="time"
+                    value={openingTime}
+                    onChange={(e) => setOpeningTime(e.target.value)}
+                  />
+                </div>
+                <div className="col">
+                  <label>Closing Time:</label>
+                  <input
+                    type="time"
+                    value={closingTime}
+                    onChange={(e) => setClosingTime(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                className="btn btn-primary mt-3"
+                onClick={handleSaveSchedule}
+              >
+                Save Schedule
+              </button>
+            </div>
+
             <UserList />
+
+            {statusMessage && (
+              <div className="alert alert-success mt-3">{statusMessage}</div>
+            )}
           </>
         )}
         {isSettingModalOpen && (
@@ -239,6 +307,7 @@ const AdminDashboard = () => {
             onSave={(value) => {
               setMaxAppointmentsPerHour(value);
               setStatusMessage("Settings updated successfully");
+              handleSaveSchedule(); // Asegúrate de guardar cuando se cierre el modal
             }}
             currentValue={maxAppointmentsPerHour}
           />

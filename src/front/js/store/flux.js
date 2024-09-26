@@ -267,13 +267,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error:", error);
         }
       },
-      getMaxAppointmentsHour: async () => {
-        const response = await fetch(`${apiUrl}/settings`);
-        if (!response.ok) throw new Error("Network response failed");
-        const data = await response.json();
-        return data.max_appointments_per_hour;  
+    //   getMaxAppointmentsHour: async () => {
+    //     const response = await fetch(`${apiUrl}/settings`);
+    //     if (!response.ok) throw new Error("Network response failed");
+    //     const data = await response.json();
+    //     return data.max_appointments_per_hour;  
+    // }
+    getSettings: async () => {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${apiUrl}/settings`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json" // Puede ser necesario dependiendo de tu backend
+          },
+      });
+  
+      if (!response.ok) {
+          throw new Error("Network response failed");
+      }
+  
+      const data = await response.json();
+      return {
+          maxAppointmentsPerHour: data.max_appointments_per_hour,
+          openingTime: data.opening_time,
+          closingTime: data.closing_time
+      };
     }
-
     },
   };
 };

@@ -406,36 +406,56 @@ def get_services():
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// post a /settings 
-@api.route('/settings', methods=['POST'])
-@jwt_required()
-def create_setting():
-    data = request.get_json()
-    max_appointments_per_hour = data.get('max_appointments_per_hour')
-    if max_appointments_per_hour is None:
-        return jsonify({"error": "Max appointments per hour is required"}), 400
+@api.route('/settings', methods=['GET', 'PUT', 'POST'])  
+def manage_settings():
+    if request.method == 'GET':
+        # Recuperar la configuración actual
+        setting = Setting.query.first()
+        if setting:
+            return jsonify(setting.serialize()), 200
+        else:
+            return jsonify({"error": "Settings not configured"}), 404
 
-    setting = Setting.query.first()
-    if setting:
-        setting.max_appointments_per_hour = max_appointments_per_hour
-    else:
-        setting = Setting(max_appointments_per_hour=max_appointments_per_hour)
-        db.session.add(setting)
-    db.session.commit()
+    if request.method in ['PUT', 'POST']:  # Maneja tanto PUT como POST
+        data = request.get_json()
+        max_appointments_per_hour = data.get('max_appointments_per_hour')
+        opening_time = data.get('opening_time')
+        closing_time = data.get('closing_time')
 
-    response_body = setting.serialize()
-    return jsonify(response_body), 201
+        setting = Setting.query.first()
+        if setting:
+            if max_appointments_per_hour is not None:
+                setting.max_appointments_per_hour = max_appointments_per_hour
+            if opening_time is not None:
+                setting.opening_time = opening_time
+            if closing_time is not None:
+                setting.closing_time = closing_time
+        else:
+            # Si no existe una configuración, se crea una nueva
+            setting = Setting(
+                max_appointments_per_hour=max_appointments_per_hour,
+                opening_time=opening_time,
+                closing_time=closing_time
+            )
+            db.session.add(setting)
+
+        db.session.commit()
+
+        response_body = setting.serialize()
+        return jsonify(response_body), 200
+
 
 
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /settings 
-@api.route('/settings', methods=['GET'])
-# @jwt_required()
-def get_setting():
-    setting = Setting.query.first()
-    if setting:
-        response_body = setting.serialize()
-        return jsonify(response_body), 200
-    else:
-        return jsonify({"msg": "Settings not configured"}), 404
+# @api.route('/settings', methods=['GET'])
+# # @jwt_required()
+# def get_setting():
+#     setting = Setting.query.first()
+#     if setting:
+#         response_body = setting.serialize()
+#         return jsonify(response_body), 200
+#     else:
+#         return jsonify({"msg": "Settings not configured"}), 404
     
 # ///////////////////////////////////////////////////////////////////////////////////////////// get a /users 
 @api.route('/users', methods=['GET'])

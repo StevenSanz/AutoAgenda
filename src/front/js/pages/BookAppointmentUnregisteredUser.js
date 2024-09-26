@@ -25,19 +25,23 @@ const BookAppointmentUnregisteredUser = () => {
   const [isAvailable, setIsAvailable] = useState(true);
   const [takenSlots, setTakenSlots] = useState([]);
   const [maxAppointmentsPerHour, setMaxAppointmentsPerHour] = useState(null);
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
   const apiUrl = process.env.BACKEND_URL + "/api";
-   // Obtener el valor de maxAppointmentsPerHour solo una vez al montar el componente
-   useEffect(() => {
-    const fetchMaxAppointmentsPerHour = async () => {
+  
+  useEffect(() => {
+    const fetchSettings = async () => {
       try {
-        const maxHour = await actions.getMaxAppointmentsHour();
-        setMaxAppointmentsPerHour(maxHour); // Almacena el valor en el estado
+        const settings = await actions.getSettings(); 
+        setMaxAppointmentsPerHour(settings.maxAppointmentsPerHour); 
+        setOpeningTime(settings.openingTime); 
+        setClosingTime(settings.closingTime); 
       } catch (error) {
-        console.error("Error fetching max appointments per hour:", error);
+        console.error("Error fetching settings:", error);
       }
     };
   
-    fetchMaxAppointmentsPerHour();
+    fetchSettings();
   }, [actions]);
 
   useEffect(() => {
@@ -120,17 +124,17 @@ const BookAppointmentUnregisteredUser = () => {
         });
 
         // También deshabilitar las horas fuera del horario laboral
+        const openingHour = parseInt(openingTime.split(":")[0], 10); // Obtener la hora de apertura
+        const closingHour = parseInt(closingTime.split(":")[0], 10); // Obtener la hora de cierre
+  
         for (let i = 0; i < 24; i++) {
-          if (
-            i < 9 ||
-            i >= 18 ||
-            (selectedDate === now.toISOString().split("T")[0] &&
-              i < now.getHours())
-          ) {
+          // Deshabilitar horas antes de la apertura o después de la cierre
+          if (i < openingHour || i >= closingHour || 
+            (selectedDate === now.toISOString().split("T")[0] && i < now.getHours())) {
             disabledHours.push(i);
           }
         }
-
+  
         return disabledHours;
       },
       disabledMinutes: (hour) => {
