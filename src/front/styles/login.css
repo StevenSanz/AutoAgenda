@@ -1,56 +1,90 @@
-#content{
-    background-color:#0c2346;
-    background-image: url("../img/world-dotted-map.png");
-    background-size:cover;
-   }
-
-.flex {
-    -webkit-box-flex: 1;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto
-}
-
-@media (max-width:991.98px) {
-    .padding {
-        padding: 1.5rem
-    }
-}
-
-@media (max-width:767.98px) {
-    .padding {
-        padding: 1rem
-    }
-}
-
-.padding {
-    padding: 5rem
-}
-
-
+/* Light mode */
 .card {
     background: #fff;
+    color: #333;
     border-width: 0;
     border-radius: .25rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
-    margin-bottom: 1.5rem
+    margin-bottom: 1.5rem;
 }
-
 
 .card-header {
-    background-color: transparent;
+    background-color: #f8f9fa;
+    color: #333;
     border-color: rgba(160, 175, 185, .15);
-    background-clip: padding-box
 }
 
-.card-body p:last-child {
-    margin-bottom: 0
+/* Light mode inputs */
+.form-control {
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #ced4da;
 }
 
-.card-hide-body .card-body {
-    display: none
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
-.form-check-input.is-invalid~.form-check-label,
-.was-validated .form-check-input:invalid~.form-check-label {
-    color: #f54394
+/* Dark Mode */
+.dark-mode .card {
+    background: #1e1e1e;
+    color: #f5f5f5;
+    box-shadow: 0 1px 3px rgba(255, 255, 255, .05);
 }
+
+.dark-mode .card-header {
+    background-color: #2e2e2e;
+    color: #f5f5f5;
+    border-color: rgba(255, 255, 255, .15);
+}
+
+/* Inputs dark mode */
+.dark-mode .form-control {
+    background-color: #2e2e2e;
+    color: #f5f5f5;
+    border: 1px solid #555555;
+}
+
+.dark-mode .form-control:focus {
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 0.2rem rgba(77, 171, 247, .25);
+}
+
+/* Form Background */
+#content {
+    background-color: #f2f2f2;
+    background-image: url("../img/world-dotted-map.png");
+    background-size: cover;
+}
+
+.dark-mode #content {
+    background-color: #121212;
+    background-image: none;
+}
+
+/* alerts */
+.dark-mode .alert {
+    background-color: #451515;
+    color: #f28b8b;
+    border-color: #a52a2a;
+}
+input::placeholder {
+    color: #6c757d; 
+    opacity: 1; 
+  }
+  
+.dark-mode input::placeholder {
+    color: #adb5bd; 
+    opacity: 1;
+  }
+/* transition animation */
+input::placeholder, label {
+    transition: color 0.5s ease-in-out;
+  }
+
+.form-text {
+    transition: color 0.5s ease-in-out;
+  }
+  
+  

@@ -13,8 +13,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       totalServices: null,
       totalCars: null,
       corsEnabled: { "Access-Control-Allow-Origin": "*" }, // Comentado para deshabilitar en producción
+      darkMode: JSON.parse(localStorage.getItem("darkMode")) || false,
+
     },
     actions: {
+      toggleDarkMode: () => {
+        const currentMode = getStore().darkMode;
+        const newMode = !currentMode;
+        setStore({
+          darkMode: newMode,
+        });
+        localStorage.setItem("darkMode", newMode); // Guardar en localStorage
+      },
       loadSession: async () => {
         try {
           const storageToken = localStorage.getItem("token");

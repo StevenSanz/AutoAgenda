@@ -5,7 +5,8 @@ import "../../styles/navbar.css";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
-  const { actions, store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+  const darkMode = store.darkMode;
   const [hasAccess, setHasAccess] = useState(!!store.token);
   const navigate = useNavigate();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
@@ -22,8 +23,6 @@ export const Navbar = () => {
       console.error("Error al hacer logout:", error);
   }
 };
-
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     const roleId = localStorage.getItem("role_id");
@@ -53,8 +52,20 @@ export const Navbar = () => {
     }
   }, [store.token,localStorage.token]);
 
+  useEffect(() => {
+    const body = document.body;
+
+    body.classList.remove("bg-dark", "text-light", "bg-light", "text-dark");
+    body.classList.add(...(darkMode ? ["bg-dark", "text-light"] : ["bg-light", "text-dark"]));
+}, [darkMode]);
+
+  const toggleDarkMode = () => {
+    actions.toggleDarkMode(); // Usa la acción global
+  };
+
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className={`navbar navbar-expand-lg ${darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"}`}>
       <div className="container">
         <Link className="navbar-brand" to="/">
           <img
@@ -113,7 +124,7 @@ export const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <div className="d-flex">
+          <div className="d-flex align-items-center">
             {userRole === null && (
               <>
                 <Link
@@ -201,6 +212,13 @@ export const Navbar = () => {
                 </div>
               </>
             )}
+             {/* Botón de Dark Mode */}
+            <button
+              className={`btn btn-sm ms-5 btn-${darkMode ? "light" : "dark"}`}
+              onClick={toggleDarkMode}
+            >
+              {darkMode ? "☀️ Light" : "🌙 Dark"}
+            </button>
           </div>
         </div>
       </div>

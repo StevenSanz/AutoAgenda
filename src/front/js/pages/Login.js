@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import ForgotPasswordModal from "../component/ForgotPasswordModal";
 
 const Login = () => {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
+  const darkMode = store.darkMode;
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
@@ -58,10 +59,10 @@ const Login = () => {
   return (
     <div
       id="content"
-      className="d-flex justify-content-center align-items-center min-vh-100"
+      className={`d-flex justify-content-center align-items-center min-vh-100 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}
     >
       <div className="col-md-5">
-        <div className="card">
+        <div className={`card ${darkMode ? "bg-secondary text-light" : ""}`}>
           <div className="card-header">
             <strong>Login to your account</strong>
           </div>
@@ -73,33 +74,39 @@ const Login = () => {
                 </div>
               )}
               <div className="form-group">
-                <label className="text-muted" htmlFor="inputEmail">
+                <label
+                className={`form-label ${darkMode ? "text-light" : "text-muted"}`}
+                htmlFor="inputEmail"
+                >
                   Email address
                 </label>
                 <input
                   name="inputEmail"
                   type="email"
-                  className="form-control"
+                  className={`form-control ${darkMode ? "bg-dark text-light border-light" : ""}`}
                   id="InputEmail1"
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                 />
-                <small id="emailHelp" className="form-text text-muted">
+                <small id="passwordHelp" className={`form-text ${darkMode ? "text-light" : "text-muted"}`}>
                   We don't share email with anyone
                 </small>
               </div>
               <div className="form-group">
-                <label className="text-muted" htmlFor="inputPassword">
+                <label
+                className={`form-label ${darkMode ? "text-light" : "text-muted"}`}
+                htmlFor="inputPassword"
+                >
                   Password
                 </label>
                 <input
                   name="inputPassword"
                   type="password"
-                  className="form-control"
+                  className={`form-control ${darkMode ? "bg-dark text-light border-light" : ""}`}
                   id="inputPassword"
                   placeholder="Password"
                 />
-                <small id="passwordHelp" className="form-text text-muted">
+                <small id="emailHelp" className={`form-text ${darkMode ? "text-light" : "text-muted"}`}>
                   Your password is saved in encrypted form
                 </small>
               </div>
@@ -112,7 +119,16 @@ const Login = () => {
                   Forgot your password?
                 </span>
               </div>
-              <button type="submit" className="btn btn-primary mt-3">
+              <button
+                type="submit"
+                className={`btn btn-${darkMode ? "light" : "primary"} mt-3`}
+                style={{
+                  border: darkMode ? "1px solid #fff" : "none",
+                  boxShadow: darkMode ? "0px 0px 10px 2px #fff" : "none",
+                  color: "#fff", 
+                  transition: "all 0.3s ease-in-out",
+                }}
+              >
                 Submit
               </button>
             </form>

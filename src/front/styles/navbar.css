@@ -1,6 +1,14 @@
+/* General Styles for Navbar */
 .navbar {
   padding: 1rem 2rem;
+}
+
+.navbar-light {
   background-color: #f2f2f2;
+}
+
+.navbar-dark {
+  background-color: #333333;
 }
 
 .navbar-brand img {
@@ -12,69 +20,117 @@
 .navbar-brand span {
   font-size: 1.25rem;
   font-weight: 500;
+}
+
+.navbar-light .navbar-brand span {
   color: #035cb5;
 }
 
-.nav-link {
-  margin: 0 0.5rem;
-  color: #333333;
-}
-
-.nav-link:hover {
-  color: #035cb5;
-}
-
-.btn-primary {
-  background-color: #035cb5;
-  border-color: #035cb5;
+.navbar-dark .navbar-brand span {
   color: #ffffff;
 }
 
-.btn-primary:hover {
+/* Navbar Links */
+.nav-link {
+  margin: 0 0.5rem;
+}
+
+.navbar-light .nav-link {
+  color: #333333;
+}
+
+.navbar-dark .nav-link {
+  color: #ffffff;
+}
+
+.navbar-light .nav-link:hover {
+  color: #035cb5;
+}
+
+.navbar-dark .nav-link:hover {
+  color: #90caf9;
+}
+
+/* Buttons */
+.btn-primary {
+  color: #ffffff;
+}
+
+.navbar-light .btn-primary {
+  background-color: #035cb5;
+  border-color: #035cb5;
+}
+
+.navbar-light .btn-primary:hover {
   background-color: #003366;
   border-color: #003366;
 }
 
+.navbar-dark .btn-primary {
+  background-color: #90caf9;
+  border-color: #90caf9;
+}
+
+.navbar-dark .btn-primary:hover {
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+}
+
+/* Secondary Button */
 .btn-secondary {
-  background-color: #f2f2f2;
-  color: #333333;
   border: none;
 }
 
-.btn-secondary:hover {
-  background-color: #d1d5db;
+.navbar-light .btn-secondary {
+  background-color: #f2f2f2;
   color: #333333;
 }
 
-body {
+.navbar-light .btn-secondary:hover {
+  background-color: #d1d5db;
+}
+
+.navbar-dark .btn-secondary {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.navbar-dark .btn-secondary:hover {
+  background-color: #555555;
+}
+
+/* Body Background and Text */
+body.bg-light {
   background-color: #ffffff;
   color: #333333;
 }
 
-.navbar-toggler {
-  border: none;
+body.bg-dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+/* Botón Dark Mode (Light mode ) */
+.navbar-light .btn-dark {
+  background-color: #444444;
+  color: #ffffff;
+  border-color: #444444;
 }
 
-/**
-* Ranking component
-*/
-
-.role-label-container {
-  margin-top: -5px;
-  color: white;
-  /* z-index: 1000; */
-  text-align: center;
-  font-size: 13px;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.navbar-light .btn-dark:hover {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: #333333;
 }
 
-.label.label-default.role-label {
-  border-radius: 40px;
-  background-color: #035cb5;
-  padding: 5px 10px 5px 10px;
-  margin: 0px 0px 0px 10px;
+/* Botón Light Mode (Dark mode) */
+.navbar-dark .btn-light {
+  background-color: #ffffff;
+  color: #121212;
+  border-color: #ffffff;
+}
+
+.navbar-dark .btn-light:hover {
+  background-color: #f2f2f2;
+  color: #121212;
+  border-color: #f2f2f2;
 }
